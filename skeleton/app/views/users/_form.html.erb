@@ -1,6 +1,8 @@
 
+
 <% action_url = users_url if action == :new %>
 <% action_url = user_url(user) if action == :edit %>
+<% action_url = session_url if action == :login %>
 
 
 <form action="<%=action_url%>" method="post">

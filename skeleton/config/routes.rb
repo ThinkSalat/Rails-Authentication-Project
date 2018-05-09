@@ -7,7 +7,9 @@ Rails.application.routes.draw do
   end
   
   resources :users
-  resource :session
+  resource :session, only: [:new,:create,:destroy]
+  
+  
 
   root to: redirect('/cats')
 end
