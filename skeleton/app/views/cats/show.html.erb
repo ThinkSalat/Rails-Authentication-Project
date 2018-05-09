@@ -5,15 +5,20 @@
     <th>Attribute</th>
     <th>Value</th>
   </tr>
-  <% [:age, :birth_date, :color, :sex].each do |attr_name| %>
+  <tr>
+    <td>Owner: </td>
+    <td><%= @cat.owner.user_name%></td>
+  </tr>
+  <% [:age, :birth_date, :color, :sex, :description].each do |attr_name| %>
     <tr>
-      <td><%= attr_name %></td>
+      <td><%= attr_name.capitalize %></td>
       <td><%= @cat.send(attr_name) %></td>
     </tr>
   <% end %>
 </table>
 
 <%= link_to "Edit #{@cat.name}", edit_cat_url(@cat) %>
+
 
 <h2>Rental Requests</h2>
 <table>

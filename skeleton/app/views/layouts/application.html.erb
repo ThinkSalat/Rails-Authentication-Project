@@ -7,7 +7,19 @@
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
   </head>
-
+<%  if current_user %>
+  <h1><%= "Welcome #{current_user.user_name}" %></h1>
+  <%= link_to 'Home', :root %><br>
+  <%= link_to "Log Out", session_url, method: 'delete' %>
+  <% else %>
+    <h1>Welcome! MEOW! </h1>
+    <%= link_to 'Home', :root %><br>
+    <%= link_to "Sign Up! MRRREOW", new_user_url, method: 'get' %>
+    <br>
+    <%= link_to "Sign In! MRRREOW", new_session_url, method: 'get' %>
+    
+  <% end %>
+  
   <body>
     <%= yield %>
   </body>

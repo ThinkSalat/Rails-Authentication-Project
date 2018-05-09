@@ -1,4 +1,10 @@
 class SessionsController < ApplicationController
+  before_action :redirect, except: [:create,:destroy]
+  
+  def redirect
+    redirect_to :root if current_user
+  end
+  
   def new
     @user = User.new
     render :new
@@ -10,7 +16,7 @@ class SessionsController < ApplicationController
     if @user.nil?
       redirect_to new_session_url
     else
-      session[:session_token] = @user.reset_session_token!
+      login_user!(@user)
       redirect_to cats_url
     end
     
@@ -19,5 +25,6 @@ class SessionsController < ApplicationController
   def destroy
     current_user.reset_session_token!
     session[:session_token] = nil
+    redirect_to :root
   end
 end
