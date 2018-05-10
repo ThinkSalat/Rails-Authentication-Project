@@ -8,12 +8,18 @@ class CatRentalRequestsController < ApplicationController
 
   def create
     @rental_request = CatRentalRequest.new(cat_rental_request_params)
-    if @rental_request.save
-      redirect_to cat_url(@rental_request.cat)
+    if current_user
+      @rental_request.user_id = current_user.id
+      if @rental_request.save
+        redirect_to cat_url(@rental_request.cat)
+      else
+        flash.now[:errors] = @rental_request.errors.full_messages
+        render :new
+      end
     else
-      flash.now[:errors] = @rental_request.errors.full_messages
-      render :new
-    end
+      redirect_to cat_url(@rental_request.cat)     
+    end  
+      
   end
 
   def deny
@@ -43,4 +49,5 @@ class CatRentalRequestsController < ApplicationController
   def cat_rental_request_params
     params.require(:cat_rental_request).permit(:cat_id, :end_date, :start_date, :status)
   end
+  
 end
